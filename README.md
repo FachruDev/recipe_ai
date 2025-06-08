@@ -10,28 +10,28 @@
 
 ## 🌟 Overview
 
-Recipe AI Backend adalah aplikasi FastAPI yang menggunakan kecerdasan buatan untuk membantu Anda dalam memasak. Aplikasi ini dapat mengekstrak bahan-bahan dari teks atau gambar, menghasilkan resep yang dipersonalisasi, dan menyediakan chat interaktif untuk setiap resep.
+Recipe AI Backend is a FastAPI application that uses artificial intelligence to help you with cooking. This application can extract ingredients from text or images, generate personalized recipes, and provide interactive chat for each recipe.
 
 ### ✨ Key Features
 
 🔍 **Smart Ingredient Extraction**
-- Extract dari teks dengan pemrosesan natural language
-- Upload dan analisis gambar dengan auto-resize & compression
-- Deteksi bahan makanan yang akurat
+- Extract from text with natural language processing
+- Upload and analyze images with auto-resize & compression
+- Accurate food ingredient detection
 
 🤖 **AI-Powered Recipe Generation**
-- Generate resep berdasarkan bahan yang tersedia
-- Caching in-memory untuk performa optimal
+- Generate recipes based on available ingredients
+- In-memory caching for optimal performance
 - Multiple recipe suggestions per request
 
 💬 **Contextual Chat System**
-- Chat berkelanjutan dalam konteks resep tertentu
-- Session persistence dengan SQLite database
-- Riwayat percakapan yang tersimpan
+- Continuous chat within specific recipe context
+- Session persistence with SQLite database
+- Stored conversation history
 
 🛡️ **Built-in Protection**
 - Rate limiting (5 requests/minute per IP)
-- CORS support untuk frontend integration
+- CORS support for frontend integration
 - Comprehensive error handling
 
 📚 **Developer Friendly**
@@ -60,7 +60,7 @@ Recipe AI Backend adalah aplikasi FastAPI yang menggunakan kecerdasan buatan unt
 
 ```bash
 # Clone repository
-git clone https://github.com/username/recipe_ai.git
+git clone https://github.com/FchDxCode/recipe_ai.git
 cd recipe_ai
 
 # Install dependencies
@@ -68,13 +68,13 @@ pip install -r requirements.txt
 
 # Setup environment
 cp .env.example .env
-# Edit .env dengan API keys Anda
+# Edit .env with your API keys
 
 # Run development server
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-🎉 **That's it!** Akses aplikasi di [http://localhost:8000/docs](http://localhost:8000/docs)
+🎉 **That's it!** Access the application at [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
@@ -88,8 +88,8 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 | **Java** | ≥ 8 | For OpenAPI Generator (optional) |
 
 ### Optional Tools
-- **pipenv** atau **poetry** untuk dependency management
-- **Docker** untuk containerization
+- **pipenv** or **poetry** for dependency management
+- **Docker** for containerization
 
 ---
 
@@ -128,7 +128,7 @@ pipenv shell
 
 ### Environment Variables
 
-Buat file `.env` di root directory:
+Create a `.env` file in the root directory:
 
 ```dotenv
 # ===========================================
@@ -160,21 +160,21 @@ RATE_LIMIT_WINDOW=60    # seconds
 | `DEBUG` | ❌ | `false` | Enable debug mode |
 | `LOG_LEVEL` | ❌ | `info` | Logging level |
 
-> 💡 **Tip**: Copy `.env.example` ke `.env` dan edit sesuai kebutuhan Anda.
+> 💡 **Tip**: Copy `.env.example` to `.env` and edit according to your needs.
 
 ---
 
 ## 💾 Database Setup
 
-Recipe AI menggunakan SQLite database yang akan dibuat otomatis saat aplikasi pertama kali dijalankan.
+Recipe AI uses SQLite database that will be created automatically when the application runs for the first time.
 
 ### Database Schema
-- **sessions**: Menyimpan session data dan context
-- **messages**: Riwayat chat dan interaksi
-- **recipes**: Cache resep yang di-generate
+- **sessions**: Store session data and context
+- **messages**: Chat history and interactions
+- **recipes**: Cache for generated recipes
 
 ### Migrations (Optional)
-Untuk setup migrations dengan Alembic:
+To setup migrations with Alembic:
 
 ```bash
 pip install alembic
@@ -217,7 +217,7 @@ http://localhost:8000/api
 ### 🔍 Extract Ingredients
 **POST** `/ingredients`
 
-Extract ingredients dari teks atau gambar.
+Extract ingredients from text or images.
 
 #### Request (Multipart Form)
 ```bash
@@ -251,7 +251,7 @@ curl -X POST "http://localhost:8000/api/ingredients" \
 ### 🎯 Select Recipe
 **POST** `/recipes/select`
 
-Pilih resep untuk memulai chat session.
+Select a recipe to start a chat session.
 
 #### Request
 ```json
@@ -264,34 +264,34 @@ Pilih resep untuk memulai chat session.
 #### Response
 ```json
 {
-  "message": "Resep berhasil dipilih. Anda dapat mulai bertanya tentang resep ini!"
+  "message": "Recipe successfully selected. You can now ask questions about this recipe!"
 }
 ```
 
 ### 💬 Chat About Recipe
 **POST** `/recipes/chat`
 
-Chat tentang resep yang dipilih.
+Chat about the selected recipe.
 
 #### Request
 ```json
 {
   "context_id": "abc123def456",
-  "message": "Bagaimana cara membuat pasta lebih creamy?"
+  "message": "How can I make the pasta more creamy?"
 }
 ```
 
 #### Response
 ```json
 {
-  "reply": "Untuk membuat pasta lebih creamy, Anda bisa menambahkan cream atau susu ke dalam saus..."
+  "reply": "To make pasta more creamy, you can add cream or milk to the sauce..."
 }
 ```
 
 ### 🏁 End Session
 **POST** `/recipes/end`
 
-Akhiri chat session dan hapus context.
+End the chat session and clear context.
 
 #### Request
 ```json
@@ -303,7 +303,7 @@ Akhiri chat session dan hapus context.
 #### Response
 ```json
 {
-  "message": "Session berhasil diakhiri dan context telah dihapus."
+  "message": "Session successfully ended and context has been cleared."
 }
 ```
 
@@ -311,7 +311,7 @@ Akhiri chat session dan hapus context.
 
 ## 🔗 Client SDK Generation
 
-Generate client SDK untuk berbagai bahasa pemrograman menggunakan OpenAPI specification.
+Generate client SDKs for various programming languages using OpenAPI specification.
 
 ### 1. Install OpenAPI Generator
 
@@ -359,7 +359,7 @@ openapi-generator-cli generate -i http://localhost:8000/openapi.json -g go -o ./
 
 ### 3. Automated SDK Generation
 
-Tambahkan script di `package.json`:
+Add scripts to `package.json`:
 
 ```json
 {
@@ -442,26 +442,26 @@ docker-compose down
 
 ## 🤝 Contributing
 
-Kami sangat menghargai kontribusi Anda! Berikut cara untuk berkontribusi:
+We greatly appreciate your contributions! Here's how to contribute:
 
 ### Development Setup
-1. Fork repository ini
-2. Buat branch baru: `git checkout -b feature/amazing-feature`
+1. Fork this repository
+2. Create a new branch: `git checkout -b feature/amazing-feature`
 3. Install development dependencies: `pip install -r requirements-dev.txt`
-4. Buat perubahan Anda
-5. Jalankan tests: `pytest`
-6. Commit perubahan: `git commit -m 'Add amazing feature'`
-7. Push ke branch: `git push origin feature/amazing-feature`
-8. Buat Pull Request
+4. Make your changes
+5. Run tests: `pytest`
+6. Commit changes: `git commit -m 'Add amazing feature'`
+7. Push to branch: `git push origin feature/amazing-feature`
+8. Create a Pull Request
 
 ### Code Style
-- Follow PEP 8 untuk Python code
-- Gunakan type hints
-- Tambahkan docstrings untuk functions dan classes
-- Write tests untuk features baru
+- Follow PEP 8 for Python code
+- Use type hints
+- Add docstrings for functions and classes
+- Write tests for new features
 
 ### Reporting Issues
-Gunakan GitHub Issues untuk melaporkan bug atau request fitur baru.
+Use GitHub Issues to report bugs or request new features.
 
 ---
 
@@ -473,7 +473,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **FastAPI** - Modern web framework untuk Python
+- **FastAPI** - Modern web framework for Python
 - **OpenRouter** - AI API gateway
 - **SQLite** - Lightweight database engine
 - **OpenAPI Generator** - Code generation tools
@@ -484,6 +484,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for cooking enthusiasts**
 
-[⭐ Star this repo](https://github.com/username/recipe_ai) • [🐛 Report Bug](https://github.com/username/recipe_ai/issues) • [💡 Request Feature](https://github.com/username/recipe_ai/issues)
+[⭐ Star this repo](https://github.com/FchDxCode/recipe_ai) • [🐛 Report Bug](https://github.com/FchDxCode/recipe_ai/issues) • [💡 Request Feature](https://github.com/FchDxCode/recipe_ai/issues)
 
 </div>
