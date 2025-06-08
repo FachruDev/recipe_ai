@@ -1,5 +1,5 @@
 # app/services/recipe_service.py
-from typing import Optional
+from typing import Optional, Tuple, List
 from fastapi import UploadFile, HTTPException
 from app.services.ai_service import ai_client
 from app.services.context_service import ContextService
@@ -14,17 +14,14 @@ class RecipeService:
         context_service: ContextService,
         text: Optional[str],
         image: Optional[UploadFile]
-    ) -> tuple[str, list[RecipeSummary]]:
-        # ekstrak bahan
+    ) -> Tuple[str, List[RecipeSummary]]:
         if text:
             ingredients = await self.ai.extract_ingredients_from_text(text)
         elif image:
             ingredients = await self.ai.extract_ingredients_from_image(image)
         else:
-            raise HTTPException(status_code=400, detail="Berikan `text` atau `image`.")
-        # generate resep
+            raise HTTPException(400, "Berikan `text` atau `image`.")
         recipes = await self.ai.generate_recipes(ingredients)
-        # buat context di DB
         context_id = context_service.create_context(recipes)
         return context_id, recipes
 
@@ -42,9 +39,11 @@ class RecipeService:
         context_id: str,
         message: str
     ) -> str:
+        recipe = context_service.get_selected_recipe(context_id)
+        if not recipe:
+            raise HTTPException(400, "Belum memilih resep atau context tidak valid.")
+        reply = await self.ai.answer_question(recipe, message)
         context_service.append_message(context_id, "user", message)
-        history = context_service.get_history(context_id)
-        reply = await self.ai._chat(history, model="mistralai/mistral-7b-instruct")
         context_service.append_message(context_id, "assistant", reply)
         return reply
 
@@ -55,5 +54,4 @@ class RecipeService:
     ):
         context_service.end_context(context_id)
 
-# singleton instance
 recipe_service = RecipeService()

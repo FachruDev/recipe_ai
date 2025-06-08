@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post(
     "/ingredients",
     response_model=ParseResponse,
-    dependencies=[Depends(rate_limit)]  
+    dependencies=[Depends(rate_limit)]
 )
 async def parse_ingredients(
     text: str | None = Form(None),
@@ -23,26 +23,32 @@ async def parse_ingredients(
     context_service: ContextService = Depends(get_context_service)
 ):
     if not text and not image:
-        raise HTTPException(status_code=400, detail="Berikan `text` atau `image`.")
+        raise HTTPException(400, "Berikan `text` atau `image`.")
 
-    # preprocessing image (jika ada)
     if image:
+        # Read & preprocess
         raw = await image.read()
         try:
             img = Image.open(BytesIO(raw)).convert("RGB")
         except Exception:
-            raise HTTPException(status_code=400, detail="Gagal membaca file gambar.")
+            raise HTTPException(400, "Gagal membaca file gambar.")
         img.thumbnail((1024, 1024))
         buf = BytesIO()
         img.save(buf, format="JPEG", quality=85)
         buf.seek(0)
-        image = StarletteUploadFile(
-            filename=image.filename,
-            file=buf,
-            content_type="image/jpeg"
-        )
 
-    context_id, recipes = await recipe_service.handle_initial(
-        context_service, text, image
-    )
+        wrapped = StarletteUploadFile(buf)        
+        wrapped.filename = image.filename        
+        object.__setattr__(wrapped, "_content_type", "image/jpeg")
+        image = wrapped
+
+    try:
+        context_id, recipes = await recipe_service.handle_initial(
+            context_service, text, image
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
     return ParseResponse(context_id=context_id, recipes=recipes)
