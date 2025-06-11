@@ -82,7 +82,7 @@ class AIClient:
         prompt = EXTRACT_TEXT_PROMPT.format(text=text)
         content = await self._chat(
             messages=[{"role": "user", "content": prompt}],
-            model="mistralai/mistral-7b-instruct"
+            model="opengvlab/internvl3-14b:free"
         )
         try:
             arr = self._extract_json_array(content)
@@ -108,7 +108,7 @@ class AIClient:
         ]
         content = await self._chat(
             messages=messages,
-            model="mistralai/mistral-7b-instruct"
+            model="opengvlab/internvl3-14b:free"
         )
         try:
             arr = self._extract_json_array(content)
@@ -131,7 +131,7 @@ class AIClient:
 
         content = await self._chat(
             messages=[{"role": "user", "content": prompt}],
-            model="mistralai/mistral-7b-instruct"
+            model="opengvlab/internvl3-14b:free"
         )
         try:
             arr = self._extract_json_array(content)
@@ -159,7 +159,7 @@ class AIClient:
                 {"role": "system", "content": system_prompt},
                 {"role": "user",   "content": question}
             ],
-            model="mistralai/mistral-7b-instruct"
+            model="opengvlab/internvl3-14b:free"
         )
         return reply
 
