@@ -172,16 +172,19 @@ curl -X POST "http://127.0.0.1:8000/api/session/{context_id}/chat" \
 ```
 chef-ai/
 ├── app/
-│   ├── main.py              # FastAPI application entry point
 │   ├── routers/             # API route handlers
 │   ├── services/            # Business logic layer
-│   ├── models/              # Database models
-│   ├── schemas/             # Pydantic data models
-│   └── utils/               # Utility functions
+│   ├── config.py            # Config file
+│   ├── db.py                # Database center
+│   ├── deps.py              # Helper function
+│   ├── main.py              # FastAPI application entry point
+│   ├── models.py            # Database models
+│   ├── prompts.py           # Prompt management
+│   └── schemas.py           # Pydantic data models
 ├── requirements.txt         # Python dependencies
 ├── docker-compose.yml       # Docker configuration
-├── Dockerfile              # Container definition
-└── .env.example            # Environment template
+├── Dockerfile               # Container definition
+└── .env.example             # Environment template
 ```
 
 ### Design Principles
